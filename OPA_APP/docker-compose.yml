@@ -1,0 +1,68 @@
+version: '3'
+
+
+volumes:
+  hist-data:
+  stream-data:
+
+services:
+  postgres_stream:
+    image: postgres:latest
+    container_name: stream-db-container
+    restart: always
+    ports:
+      - "5431:5432"
+    environment:
+      POSTGRES_USER: usr
+      POSTGRES_PASSWORD: pwd
+      POSTGRES_DB: streamdb
+    volumes:
+      - stream-data:/var/lib/postgresql/data/
+
+
+  postgres_hist:
+    image: postgres:latest
+
+    container_name: hist-db-container
+    restart: always
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: usr
+      POSTGRES_PASSWORD: pwd
+      POSTGRES_DB: historicdb
+    volumes:
+      - hist-data:/var/lib/postgresql/data/
+
+  stream:
+    build: stream
+    depends_on:
+      - postgres_stream
+    environment:
+      POSTGRES_USER: usr
+      POSTGRES_PASSWORD: pwd
+      POSTGRES_DB: streamdb
+
+
+  historic:
+    build: historic
+    depends_on:
+      - postgres_hist
+    environment:
+      POSTGRES_USER: usr
+      POSTGRES_PASSWORD: pwd
+      POSTGRES_DB: historicdb
+
+  app:
+    build: app
+    depends_on:
+      - postgres_hist
+      - postgres_stream
+
+    ports:
+      - "8501:8501"
+    environment:
+      POSTGRES_USER: usr
+      POSTGRES_PASSWORD: pwd
+    restart: always
+

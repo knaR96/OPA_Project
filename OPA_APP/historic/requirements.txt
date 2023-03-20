@@ -1,0 +1,8 @@
+pandas
+pip 
+python-binance
+rel
+requests
+websocket-client   
+websockets
+psycopg2-binary

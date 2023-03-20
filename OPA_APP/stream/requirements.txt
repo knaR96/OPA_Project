@@ -1,0 +1,7 @@
+pip
+websocket-client
+pandas
+python-binance
+rel
+python-dateutil
+psycopg2-binary
