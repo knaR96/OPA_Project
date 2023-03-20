@@ -9,4 +9,4 @@ Pour lancer l'application :
 - L'application est accessible sur le navigateur de votre choix à l'addresse : http://localhost:8501
 
 Prérequis : 
-Installer Docker dasktop sur sa machine locale
+Installer Docker desktop sur sa machine locale
